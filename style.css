@@ -82,21 +82,33 @@ h2 { font-size: 2.5rem; }
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 0 0 4px #444;
 }
 
-/* HERO MODE: Full screen! */
+#sticky-phone-container::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-image: url('heroBG.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+    z-index: -1;
+}
+
+#sticky-phone-container.hero-mode::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* HERO MODE: Centered Phone */
 #sticky-phone-container.hero-mode .iphone-frame {
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-    padding: 0; /* No borders in full screen */
-    box-shadow: none;
-}
-#sticky-phone-container.hero-mode .screen-container {
-    border-radius: 0;
-}
-#sticky-phone-container.hero-mode .notch {
-    top: 0; /* Attach notch to top */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--iphone-width);
+    height: var(--iphone-height);
+    border-radius: var(--iphone-border-radius);
+    padding: 12px;
 }
 
 /* SIDE MODE: Normal phone */
@@ -194,10 +206,7 @@ h2 { font-size: 2.5rem; }
    Screen: Lock Screen (Hero) - Light Mode & Custom Slider
    ========================================================================== */
 .lock-screen {
-    background-image: url('IPHONE.jpeg'); /* Background image with hands */
-    background-size: cover;
-    background-position: center;
-    background-color: #f4f6f9; /* fallback light mode */
+    background-color: #f8f9fa; /* Bright / almost white */
     display: flex;
     flex-direction: column;
     align-items: center;
