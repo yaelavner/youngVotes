@@ -1,118 +1,196 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     /* ==========================================================================
-       1. iPhone Live Clock
+       1. Custom Slide to Unlock Logic
+       ========================================================================== */
+    const thumb = document.getElementById('slider-thumb');
+    const fill = document.getElementById('slider-fill');
+    const track = document.getElementById('slider-track');
+    
+    let isDragging = false;
+    let startX = 0;
+    let isUnlocked = false;
+
+    function handleStart(e) {
+        if (isUnlocked) return;
+        isDragging = true;
+        startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        thumb.style.transition = 'none';
+        fill.style.transition = 'none';
+    }
+
+    function handleMove(e) {
+        if (!isDragging || isUnlocked) return;
+        const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        
+        // Since we want Left-to-Right sliding:
+        // RTL direction implies coordinates might be reversed visually if the whole page is RTL,
+        // but clientX is absolute from the left of the screen.
+        let diffX = currentX - startX;
+        
+        // Boundaries
+        const trackWidth = track.offsetWidth;
+        const maxMove = trackWidth - thumb.offsetWidth - 8; // padding
+
+        if (diffX < 0) diffX = 0;
+        if (diffX > maxMove) diffX = maxMove;
+
+        thumb.style.left = `calc(4px + ${diffX}px)`;
+        fill.style.width = `calc(52px + ${diffX}px)`; // thumb width + diff
+
+        if (diffX >= maxMove * 0.95) {
+            unlockAction();
+        }
+    }
+
+    function handleEnd() {
+        if (!isDragging || isUnlocked) return;
+        isDragging = false;
+        // Snap back if not unlocked
+        thumb.style.transition = 'left 0.3s ease';
+        fill.style.transition = 'width 0.3s ease';
+        thumb.style.left = '4px';
+        fill.style.width = '0%';
+    }
+
+    thumb.addEventListener('mousedown', handleStart);
+    document.addEventListener('mousemove', handleMove);
+    document.addEventListener('mouseup', handleEnd);
+
+    thumb.addEventListener('touchstart', handleStart, {passive: true});
+    document.addEventListener('touchmove', handleMove, {passive: true});
+    document.addEventListener('touchend', handleEnd);
+
+    function unlockAction() {
+        isUnlocked = true;
+        // 1. Remove lock state
+        document.body.classList.remove('locked-state');
+        // 2. Show main content
+        const mainContent = document.getElementById('main-content');
+        mainContent.classList.remove('hidden-until-unlock');
+        
+        // 3. Scroll to Section 1 which will trigger the IntersectionObserver to shrink the phone
+        setTimeout(() => {
+            document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    }
+
+    /* ==========================================================================
+       2. Sticky Phone & Scroll Observer Logic
+       ========================================================================== */
+    const stickyContainer = document.getElementById('sticky-phone-container');
+    const sections = document.querySelectorAll('.scroll-section');
+    const phoneScreens = document.querySelectorAll('.phone-screen');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-30% 0px -50% 0px',
+        threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const targetScreenId = entry.target.getAttribute('data-screen');
+                const isHero = entry.target.id === 'hero';
+
+                // Handle Phone Position (Center vs Side)
+                // If it's unlocked and we scroll back up to hero, it stays side? 
+                // Wait, if we are unlocked, Hero section is empty anyway.
+                // Let's make it so if hero is visible, it scales back to hero-mode.
+                if (isHero && !document.body.classList.contains('locked-state')) {
+                    // Let's actually keep it in hero mode if we scroll all the way up
+                    stickyContainer.classList.add('hero-mode');
+                    stickyContainer.classList.remove('side-mode');
+                } else if (!isHero) {
+                    stickyContainer.classList.remove('hero-mode');
+                    stickyContainer.classList.add('side-mode');
+                }
+
+                // Handle Screen Content inside the Phone
+                phoneScreens.forEach(screen => {
+                    if (screen.id === targetScreenId) {
+                        screen.classList.add('active-screen');
+                    } else {
+                        screen.classList.remove('active-screen');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+    /* ==========================================================================
+       3. iPhone Live Clock & Countdown
        ========================================================================== */
     const timeElement = document.getElementById('iphone-time');
     const dateElement = document.getElementById('iphone-date');
-
+    const countdownElement = document.getElementById('countdown-text');
     const hebrewDays = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
     const hebrewMonths = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
 
     function updateClock() {
         const now = new Date();
-        
-        // Time format HH:MM
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
         timeElement.textContent = `${hours}:${minutes}`;
 
-        // Date format: יום X, DD ב-Month
         const dayName = hebrewDays[now.getDay()];
         const day = now.getDate();
         const monthName = hebrewMonths[now.getMonth()];
         dateElement.textContent = `יום ${dayName}, ${day} ב${monthName}`;
     }
 
-    // Update every minute
-    setInterval(updateClock, 60000);
-    updateClock(); // Initial call
-
-    /* ==========================================================================
-       2. Election Countdown
-       ========================================================================== */
-    const countdownElement = document.getElementById('countdown-text');
-    const electionDate = new Date('2026-10-27T00:00:00');
-
     function updateCountdown() {
         const now = new Date();
+        const electionDate = new Date('2026-10-27T00:00:00');
         const diffTime = electionDate - now;
-
         if (diffTime <= 0) {
             countdownElement.textContent = "היום זה יום הבחירות! צאו להצביע!";
-            return;
+        } else {
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            countdownElement.textContent = `נשארו עוד ${diffDays} ימים עד לבחירות 2026.`;
         }
-
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        countdownElement.textContent = `נשארו עוד ${diffDays} ימים עד לבחירות 2026.`;
     }
-
+    setInterval(updateClock, 60000);
+    updateClock();
     updateCountdown();
-    // Update daily
-    setInterval(updateCountdown, 1000 * 60 * 60 * 24);
-
-    /* ==========================================================================
-       3. Slide to Unlock (Hero Section)
-       ========================================================================== */
-    const unlockSlider = document.getElementById('unlock-slider');
-    const sliderThumb = document.getElementById('slider-thumb');
-    let isUnlocked = false;
-
-    // Support for RTL direction: input type="range" in RTL goes right-to-left usually.
-    // However, our custom thumb needs visual updating.
-    unlockSlider.addEventListener('input', (e) => {
-        if (isUnlocked) return;
-        const val = parseInt(e.target.value);
-        
-        // Move the visual thumb
-        // Assuming slider is LTR inside for simplicity, but if RTL, left side means lower value in CSS.
-        // We'll calculate percentage for the thumb left position.
-        // The thumb width is 46px, track is 100%. We calculate center.
-        const percentage = val;
-        sliderThumb.style.left = `calc(${percentage}% - (${percentage * 0.46}px))`; // simple approximation for offset
-
-        // If reached end
-        if (val >= 95) {
-            isUnlocked = true;
-            // Scroll to next section
-            document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
-            
-            // Reset after a short delay
-            setTimeout(() => {
-                unlockSlider.value = 0;
-                sliderThumb.style.left = '2px';
-                isUnlocked = false;
-            }, 1000);
-        }
-    });
 
     /* ==========================================================================
        4. Mandate Slider (Section 1)
        ========================================================================== */
     const friendsSlider = document.getElementById('friends-slider');
     const friendsCountText = document.getElementById('friends-count');
-    const mandateResultText = document.getElementById('mandate-result-text');
+    const dynamicMainText = document.getElementById('dynamic-main-text');
+    const dynamicBottomLine = document.getElementById('dynamic-bottom-line');
     const graphBar = document.getElementById('graph-bar');
 
     const mandateStates = [
         {
             count: "0",
-            text: "הקול שלך הוא התחלה, אבל לבד קשה להזיז הרים.",
+            mainText: "הקול שלך הוא התחלה, אבל לבד קשה להזיז הרים.",
+            bottomLine: "השורה התחתונה: בבחירות האחרונות, אלפי קולות הלכו לפח רק כי אנשים חשבו ש'הקול שלי לא משנה'. אל תיכנסו לסטטיסטיקה הזו.",
             graphHeight: "10%"
         },
         {
             count: "5",
-            text: "מזל טוב, הרגע השפעתם על תקציב של כמה מיליונים למלגות סטודנטים.",
+            mainText: "מזל טוב, הרגע השפעתם על תקציב של כמה מיליונים למלגות סטודנטים.",
+            bottomLine: "השורה התחתונה: 5 אנשים נשמע קצת, אבל זה מספיק כדי להזיז רשימות מקומיות או לייצר יתרון בפריימריז. כל קול נספר.",
             graphHeight: "35%"
         },
         {
             count: "20",
-            text: "כאן זה כבר נהיה מעניין. כמות כזו של אנשים יכולה להכריע מי ייכנס לכנסת ומי יישאר בחוץ בגלל אחוז החסימה.",
+            mainText: "כאן זה כבר נהיה מעניין. כמות כזו של אנשים יכולה להכריע מי ייכנס לכנסת.",
+            bottomLine: "השורה התחתונה: מפלגות נופלות על חודו של קול ועל אחוז החסימה. 20 אנשים שמצביעים ביחד זה כוח שאי אפשר להתעלם ממנו.",
             graphHeight: "70%"
         },
         {
             count: "100+",
-            text: "בום. זה הכוח לשנות חוקים. ככה נראית דמוקרטיה שעובדת בשבילכם.",
+            mainText: "בום. זה הכוח לשנות חוקים. ככה נראית דמוקרטיה שעובדת בשבילכם.",
+            bottomLine: "השורה התחתונה: כשהדור שלנו מתאחד, הפוליטיקאים חייבים לעבוד בשבילנו. פשוט מאוד, המנדט אצלכם בידיים.",
             graphHeight: "100%"
         }
     ];
@@ -122,86 +200,95 @@ document.addEventListener('DOMContentLoaded', () => {
         const state = mandateStates[stateIndex];
 
         friendsCountText.textContent = state.count;
-        mandateResultText.textContent = state.text;
+        dynamicMainText.textContent = state.mainText;
+        dynamicBottomLine.innerHTML = `<strong>השורה התחתונה:</strong> ${state.bottomLine.replace('השורה התחתונה: ', '')}`;
         graphBar.style.height = state.graphHeight;
     });
 
-    /* ==========================================================================
-       5. Accordion (Section 2 - Myths)
-       ========================================================================== */
-    const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-    accordionHeaders.forEach(header => {
-        header.addEventListener('click', () => {
-            const item = header.parentElement;
-            const content = header.nextElementSibling;
-            const isActive = item.classList.contains('active');
-
-            // Close all items
-            document.querySelectorAll('.accordion-item').forEach(accItem => {
-                accItem.classList.remove('active');
-                accItem.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
-                accItem.querySelector('.icon').textContent = '+';
-                // Reset heights
-                accItem.querySelector('.accordion-content').style.maxHeight = null;
-            });
-
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-                header.setAttribute('aria-expanded', 'true');
-                header.querySelector('.icon').textContent = '−';
-                // We set max-height large enough to hold content
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        });
-    });
-
-    // Initialize the first accordion item height
-    const firstAccordionContent = document.querySelector('.accordion-item.active .accordion-content');
-    if (firstAccordionContent) {
-        firstAccordionContent.style.maxHeight = firstAccordionContent.scrollHeight + "px";
-    }
 
     /* ==========================================================================
-       6. Smooth Scroll for Buttons
+       5. WhatsApp Myths (Section 2)
        ========================================================================== */
-    const navButtons = document.querySelectorAll('.next-section');
-    navButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetId = btn.getAttribute('data-target');
-            if (targetId) {
-                const targetEl = document.querySelector(targetId);
-                if (targetEl) {
-                    targetEl.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        });
-    });
+    const chatBubbles = document.querySelectorAll('.chat-bubble.actionable');
+    const mythExpTitle = document.getElementById('myth-exp-title');
+    const mythExpReality = document.getElementById('myth-exp-reality');
+    const mythExpAction = document.getElementById('myth-exp-action');
+    const mythExplanationBox = document.getElementById('myth-explanation');
 
-    /* ==========================================================================
-       7. Intersection Observer for Animations (Optional Polish)
-       ========================================================================== */
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: "0px 0px -50px 0px"
+    const mythsData = {
+        myth1: {
+            title: 'מיתוס: "פתק לבן זה אקט מחאתי חזק"',
+            reality: 'המציאות: פתק לבן הוא פשוט פתק פסול. הוא לא נספר במניין הקולות הכשרים ולא משפיע על חלוקת המנדטים.',
+            action: 'איך שוברים אותו: מסבירים שמי ששם פתק לבן בעצם נותן את הקול שלו למי שהוא הכי שונא.'
+        },
+        myth2: {
+            title: 'מיתוס: "כולם אותו דבר, שום דבר לא ישתנה"',
+            reality: 'המציאות: הפער בין קואליציה אחת לאחרת הוא ההבדל בין תחבורה ציבורית בשבת לבין סגר, או בין סיוע בשכר דירה להתעלמות מוחלטת.',
+            action: 'איך שוברים אותו: מראים להם הצבעה אחת מהכנסת האחרונה שפגעה בהם ישירות.'
+        },
+        myth3: {
+            title: 'מיתוס: "אין לי כוח לזה, זה יום חופש, אני בים."',
+            reality: 'המציאות: בזמן שאתם בים, הקבוצות הכי מאורגנות במדינה עומדות בתור לקלפי ב-100% הצבעה. הן סופרות על זה שתהיו בים.',
+            action: 'איך שוברים אותו: קובעים ללכת להצביע ביחד בבוקר, ואז נוסעים לים.'
+        }
     };
 
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+    chatBubbles.forEach(bubble => {
+        bubble.addEventListener('click', () => {
+            const mythKey = bubble.getAttribute('data-myth');
+            const data = mythsData[mythKey];
+            
+            chatBubbles.forEach(b => b.classList.remove('active'));
+            bubble.classList.add('active');
 
-    // Add base styles and observe
-    document.querySelectorAll('.split-section .content-side, .split-section .device-side, .centered-device-section .iphone-frame').forEach(el => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(20px)";
-        el.style.transition = "opacity 0.6s ease-out, transform 0.6s ease-out";
-        fadeObserver.observe(el);
+            mythExpTitle.textContent = data.title;
+            mythExpReality.textContent = data.reality;
+            mythExpAction.textContent = data.action;
+            
+            // Animation reset
+            mythExplanationBox.style.transition = 'none';
+            mythExplanationBox.style.transform = 'translateY(10px)';
+            mythExplanationBox.style.opacity = '0';
+            
+            // Trigger reflow
+            void mythExplanationBox.offsetWidth;
+            
+            mythExplanationBox.style.transition = 'all 0.3s ease';
+            mythExplanationBox.style.transform = 'translateY(0)';
+            mythExplanationBox.style.opacity = '1';
+        });
     });
+
+    /* ==========================================================================
+       6. Cards Popup (Section 3)
+       ========================================================================== */
+    const conceptCards = document.querySelectorAll('.concept-card');
+    const conceptPopup = document.getElementById('concept-popup');
+    const popupTitle = document.getElementById('popup-title');
+    const popupDesc = document.getElementById('popup-desc');
+    const closePopupBtn = document.querySelector('.close-popup');
+
+    const conceptsData = {
+        mandate: { title: "מנדט", desc: "המושב בכנסת. יש 120 כאלה. כל מנדט שווה בערך 35,000-40,000 קולות (תלוי בשיעור ההצבעה)." },
+        hasima: { title: "אחוז החסימה", desc: '"תנאי הסף". מפלגה שלא מקבלת לפחות 3.25% מכלל הקולות – נשארת בחוץ, וכל הקולות שלה נזרקים לפח.' },
+        matza: { title: "מצע בחירות", desc: 'ה"סטורי" של המפלגה. מה הם מבטיחים לעשות אם יבחרו (ספוילר: כדאי לבדוק אם הם באמת עבדו בזה בעבר).' },
+        odafim: { title: "הסכם עודפים", desc: '"טינדר של מפלגות". שתי מפלגות חותמות ביניהן ששאריות הקולות שלהן יתאחדו כדי לנסות להשיג עוד מנדט אחד נוסף למי שגדולה יותר.' },
+        coalition: { title: "קואליציה vs אופוזיציה", desc: 'הקואליציה הם אלו ש"בממשלה" (הקבוצה ששולטת), והאופוזיציה הם אלו שמבקרים אותם ומנסים להחליף אותם.' }
+    };
+
+    conceptCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const conceptKey = card.getAttribute('data-concept');
+            const data = conceptsData[conceptKey];
+            
+            popupTitle.textContent = data.title;
+            popupDesc.textContent = data.desc;
+            conceptPopup.classList.add('show');
+        });
+    });
+
+    closePopupBtn.addEventListener('click', () => {
+        conceptPopup.classList.remove('show');
+    });
+
 });

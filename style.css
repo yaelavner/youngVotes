@@ -2,7 +2,6 @@
    CSS Variables
    ========================================================================== */
 :root {
-    /* Colors */
     --color-bg-light: #FFFBEB; /* Warm Beige / Cream */
     --color-bg-teal: #76D7C4; /* Vibrant Teal */
     --color-bg-dark: #1A1A1A; /* Near Black */
@@ -10,37 +9,23 @@
     --color-text-dark: #1A1A1A;
     --color-text-light: #FFFFFF;
     
-    --color-accent: #3498DB; /* Light Blue for buttons/highlights */
-    --color-accent-hover: #2980B9;
+    --color-accent: #3498DB; 
     
-    --color-glass-bg: rgba(255, 255, 255, 0.2);
-    --color-glass-border: rgba(255, 255, 255, 0.4);
+    --color-glass-bg: rgba(255, 255, 255, 0.6);
+    --color-glass-border: rgba(255, 255, 255, 0.8);
     
-    /* Typography */
     --font-primary: 'Rubik', sans-serif;
     
-    /* Spacing & Sizes */
     --iphone-width: 340px;
     --iphone-height: 700px;
     --iphone-border-radius: 40px;
-    
-    --transition-speed: 0.3s;
 }
 
 /* ==========================================================================
    Reset & Base Styles
    ========================================================================== */
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
 body {
     font-family: var(--font-primary);
     background-color: var(--color-bg-light);
@@ -49,118 +34,88 @@ body {
     overflow-x: hidden;
 }
 
-/* Accessibility: Skip Link */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-bg-dark);
-    color: var(--color-text-light);
-    padding: 8px;
-    z-index: 1000;
-    transition: top 0.2s;
-}
-.skip-link:focus {
-    top: 0;
+body.locked-state {
+    overflow: hidden; /* Prevent scroll until unlocked */
 }
 
 .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
+.hidden { display: none !important; }
+.hidden-until-unlock { display: none !important; }
 
-/* Focus states for accessibility */
-*:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 2px;
-}
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
+h2 { font-size: 2.5rem; }
+.highlight { color: var(--color-bg-teal); }
+.highlight-white { color: var(--color-text-light); }
+.dark-text { color: var(--color-text-dark) !important; }
+.white-text { color: var(--color-text-light) !important; }
 
-/* ==========================================================================
-   Typography & Utilities
-   ========================================================================== */
-h1, h2, h3 {
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
+.light-bg { background-color: var(--color-bg-light); }
+.teal-bg { background-color: var(--color-bg-teal); }
+.black-bg { background-color: var(--color-bg-dark); color: var(--color-text-light); }
 
-h2 {
-    font-size: 2.5rem;
-}
-
-.highlight {
-    color: var(--color-bg-teal);
-}
-.highlight-white {
-    color: var(--color-text-light);
-}
-
-.white-text {
-    color: var(--color-text-light);
-}
-
-.light-bg {
-    background-color: var(--color-bg-light);
-}
-
-.teal-bg {
-    background-color: var(--color-bg-teal);
-    color: var(--color-text-light);
-}
-
-.black-bg {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-light);
-}
-
-/* CTA Button */
 .cta-button {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: var(--color-accent);
-    color: var(--color-text-light);
-    border: none;
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-family: var(--font-primary);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color var(--transition-speed), transform 0.2s;
-    text-decoration: none;
-    margin-top: 20px;
+    display: inline-block; padding: 12px 30px; background-color: var(--color-accent); color: var(--color-text-light); border: none; border-radius: 30px; font-size: 1.1rem; font-family: var(--font-primary); font-weight: 600; cursor: pointer; transition: 0.2s;
 }
-.cta-button:hover {
-    background-color: var(--color-accent-hover);
-    transform: translateY(-2px);
-}
-.cta-button.light-btn {
-    background-color: var(--color-bg-light);
-    color: var(--color-text-dark);
-}
-.cta-button.light-btn:hover {
-    background-color: #f0f0f0;
-}
+.cta-button:hover { transform: translateY(-2px); opacity: 0.9; }
 
 /* ==========================================================================
-   Device Frame (iPhone Mockup)
+   Sticky Phone Architecture
    ========================================================================== */
+#sticky-phone-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 100;
+}
+
 .iphone-frame {
+    position: absolute;
+    background-color: #000;
+    pointer-events: auto;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 0 0 4px #444;
+}
+
+/* HERO MODE: Full screen! */
+#sticky-phone-container.hero-mode .iphone-frame {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    padding: 0; /* No borders in full screen */
+    box-shadow: none;
+}
+#sticky-phone-container.hero-mode .screen-container {
+    border-radius: 0;
+}
+#sticky-phone-container.hero-mode .notch {
+    top: 0; /* Attach notch to top */
+}
+
+/* SIDE MODE: Normal phone */
+#sticky-phone-container.side-mode .iphone-frame {
+    top: 50%;
+    right: auto;
+    left: 15vw; /* Position on left side */
+    transform: translateY(-50%);
     width: var(--iphone-width);
     height: var(--iphone-height);
-    background-color: #000;
     border-radius: var(--iphone-border-radius);
     padding: 12px;
-    position: relative;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 0 0 4px #444;
-    margin: 0 auto;
-    overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+    #sticky-phone-container.side-mode .iphone-frame {
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
 }
 
 .notch {
@@ -173,529 +128,191 @@ h2 {
     background-color: #000;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    z-index: 10;
+    z-index: 50;
+    transition: top 0.8s ease;
 }
 
-.screen {
+.screen-container {
     width: 100%;
     height: 100%;
     border-radius: calc(var(--iphone-border-radius) - 12px);
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
     background-color: #fff;
-    
-    /* Hide scrollbar */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    transition: border-radius 0.8s ease;
 }
-.screen::-webkit-scrollbar {
-    display: none;
+
+.phone-screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    overflow-y: auto;
+    -ms-overflow-style: none; scrollbar-width: none;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+.phone-screen.active-screen {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ==========================================================================
-   Hero Section
+   Scrollable Layout
    ========================================================================== */
-.hero-section {
+.scroll-sections {
+    position: relative;
+    z-index: 10;
+}
+
+.scroll-section {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
-    padding: 2rem;
-    position: relative;
 }
 
-.lock-screen {
-    background-image: url('IPHONE.jpeg'); /* Fallback if provided, else gradient */
-    background: linear-gradient(to bottom, #112233, #334455); /* Placeholder if no image */
-    background-size: cover;
-    background-position: center;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 60px; /* Space for notch */
-}
-
-.clock-area {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.lock-icon {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-}
-
-.time {
-    font-size: 4.5rem;
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -2px;
-}
-
-.date {
-    font-size: 1.1rem;
-    font-weight: 500;
-    opacity: 0.9;
-}
-
-/* Notifications iOS Style */
-.notifications-area {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.notification {
-    background: var(--color-glass-bg);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid var(--color-glass-border);
-    border-radius: 18px;
-    padding: 12px 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.notif-header {
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    opacity: 0.8;
-}
-
-.notif-icon {
-    margin-left: 5px;
-}
-
-.notif-time {
-    margin-right: auto;
-}
-
-.notif-body p {
-    font-size: 0.95rem;
-    line-height: 1.3;
-}
-
-.story-title {
-    font-weight: 600;
-    margin-bottom: 3px;
-}
-
-/* Slide to Unlock */
-.slider-to-unlock {
-    margin-top: auto;
-    margin-bottom: 40px;
-    width: 80%;
-    text-align: center;
-    position: relative;
-}
-
-.unlock-text {
-    display: block;
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-bottom: 10px;
-    animation: pulseText 2s infinite;
-}
-
-@keyframes pulseText {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-.slider-track {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 25px;
-    overflow: hidden;
-}
-
-#unlock-slider {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    outline: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    cursor: pointer;
-    opacity: 0; /* Hide default input */
-}
-
-.slider-thumb {
-    position: absolute;
-    top: 2px;
-    left: 2px; /* RTL means starting from right? Wait, default range slider goes left to right. Let's make it intuitive for RTL if possible, but standard is left-to-right */
-    width: 46px;
-    height: 46px;
-    background-color: white;
-    border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: 1;
-    transition: transform 0.1s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.slider-thumb::after {
-    content: "➔"; /* Arrow pointing right */
-    color: #333;
-}
-
-/* ==========================================================================
-   Split Sections (Section 1 & 2)
-   ========================================================================== */
-.split-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+.content-right-section {
     padding: 4rem 10%;
-    gap: 4rem;
+    justify-content: flex-start; /* RTL right */
 }
 
 .content-side {
-    flex: 1;
+    width: 45%;
 }
 
-.device-side {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-}
-
-.text-content-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    margin-top: 1.5rem;
-}
-
-.bottom-line {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
-    font-size: 0.95rem;
-    color: #555;
+@media (max-width: 1024px) {
+    .content-right-section {
+        align-items: flex-start;
+        padding-top: 10vh;
+    }
+    .content-side { width: 100%; text-align: center; }
 }
 
 /* ==========================================================================
-   Section 1: Interactive Mandate Slider
+   Screen: Lock Screen (Hero) - Light Mode & Custom Slider
    ========================================================================== */
-.interactive-screen {
-    background-color: var(--color-bg-teal);
-    padding: 60px 20px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    color: var(--color-text-dark);
-}
-
-.friends-counter {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 20px 0;
-    background: white;
-    padding: 10px;
-    border-radius: 15px;
-    color: var(--color-bg-teal);
-}
-
-.styled-slider {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 8px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 5px;
-    outline: none;
-    margin: 20px 0;
-    direction: ltr; /* keep slider direction ltr for standard feel or rtl */
-}
-
-.styled-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: white;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-.slider-marks {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: white;
-}
-
-.graph-visualization {
-    margin-top: 30px;
-    height: 100px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.graph-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 10%;
-    background: white;
-    transition: height 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* ==========================================================================
-   Section 2: Myths Accordion
-   ========================================================================== */
-.myths-screen {
-    background-color: var(--color-bg-light);
-    padding: 60px 15px 30px;
-}
-
-.accordion {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.accordion-item {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.accordion-header {
-    width: 100%;
-    padding: 15px;
-    background: none;
-    border: none;
-    text-align: right;
-    font-weight: 600;
-    font-size: 1rem;
-    font-family: var(--font-primary);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--color-text-dark);
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: 0 15px;
-    font-size: 0.9rem;
-    background-color: #fcfcfc;
-}
-
-.accordion-item.active .accordion-content {
-    max-height: 500px; /* arbitrary max height for transition */
-    padding: 15px;
-    border-top: 1px solid #eee;
-}
-
-.accordion-content .action {
-    margin-top: 10px;
-    font-weight: 600;
-    color: var(--color-bg-teal);
-}
-
-/* ==========================================================================
-   Section 3 & 4: Centered Device Layout
-   ========================================================================== */
-.centered-device-section {
-    min-height: 100vh;
-    padding: 5rem 2rem;
+.lock-screen {
+    background-image: url('IPHONE.jpeg'); /* Background image with hands */
+    background-size: cover;
+    background-position: center;
+    background-color: #f4f6f9; /* fallback light mode */
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 60px;
 }
+.clock-area { text-align: center; color: var(--color-text-dark); margin-bottom: 20px;}
+.lock-icon { font-size: 1.5rem; margin-bottom: 5px; }
+.time { font-size: 4.5rem; font-weight: 300; line-height: 1; letter-spacing: -2px; }
+.date { font-size: 1.1rem; font-weight: 500; }
 
-.section-header {
-    margin-bottom: 3rem;
-    max-width: 800px;
-}
+.notifications-area { width: 90%; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.notification { background: var(--color-glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--color-glass-border); border-radius: 18px; padding: 12px; }
+.notif-header { display: flex; align-items: center; font-size: 0.8rem; opacity: 0.8; margin-bottom: 5px; color: var(--color-text-dark);}
+.notif-icon { margin-left: 5px; }
+.notif-time { margin-right: auto; }
+.story-title { font-weight: 600; margin-bottom: 3px; font-size: 0.9rem;}
+.story-desc { font-size: 0.85rem; line-height: 1.2;}
 
-.center-text {
-    text-align: center;
-}
+.slider-to-unlock { margin-top: auto; margin-bottom: 80px; width: 80%; max-width: 400px; text-align: center; }
+.unlock-text { display: block; font-size: 0.9rem; margin-bottom: 10px; animation: pulse 2s infinite; color: var(--color-text-dark); font-weight: 600;}
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-/* Glossary inside iPhone */
-.glossary-screen {
-    background-color: var(--color-bg-light);
-    padding: 60px 15px 20px;
+/* Custom Left-to-Right Slider */
+.slider-track {
+    position: relative; width: 100%; height: 60px; background: rgba(0,0,0,0.1); border-radius: 30px; overflow: hidden; backdrop-filter: blur(5px); border: 1px solid rgba(0,0,0,0.1);
 }
+.slider-fill {
+    position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--color-accent); transition: width 0.1s;
+}
+.slider-thumb {
+    position: absolute; top: 4px; left: 4px; width: 52px; height: 52px; background-color: white; border-radius: 50%; z-index: 2; display: flex; align-items: center; justify-content: center; cursor: grab; box-shadow: 0 2px 10px rgba(0,0,0,0.2); transition: left 0.1s;
+}
+.slider-thumb:active { cursor: grabbing; }
+.slider-thumb::after { content: "➔"; color: var(--color-text-dark); font-weight: bold; font-size: 1.2rem;}
 
-.glossary-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+/* ==========================================================================
+   Screen: Mandates (Section 1)
+   ========================================================================== */
+.interactive-screen { background-color: var(--color-bg-teal); padding: 60px 20px 30px; text-align: center; display: flex; flex-direction: column; justify-content: center;}
+.friends-counter { font-size: 2rem; font-weight: 700; margin: 20px 0; background: white; padding: 10px; border-radius: 15px; color: var(--color-bg-teal); }
+.styled-slider { -webkit-appearance: none; width: 100%; height: 8px; background: rgba(255,255,255,0.5); border-radius: 5px; outline: none; margin: 20px 0; direction: rtl;}
+.styled-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: white; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.slider-marks { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 600; color: white; flex-direction: row-reverse;}
+.graph-visualization { margin-top: 30px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; overflow: hidden; }
+.graph-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 10%; background: white; transition: height 0.4s ease; }
 
-.glossary-card {
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+.text-content-box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-top: 1.5rem; }
+.large-dynamic-text { font-size: 1.2rem; font-weight: 600; color: var(--color-bg-teal); }
+.bottom-line { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 0.95rem; }
 
-.teal-card {
-    background-color: var(--color-bg-teal);
-    color: var(--color-text-dark);
-}
+/* ==========================================================================
+   Screen: WhatsApp Myths (Section 2)
+   ========================================================================== */
+.whatsapp-screen { background-color: #E5DDD5; display: flex; flex-direction: column; }
+.chat-header { background: #075E54; color: white; padding: 40px 15px 15px; display: flex; align-items: center; font-weight: 600;}
+.back-btn { font-size: 1.5rem; margin-left: 10px; cursor: pointer;}
+.chat-body { flex: 1; padding: 15px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto;}
+.chat-bubble { max-width: 85%; padding: 8px 12px; border-radius: 15px; position: relative; font-size: 0.9rem; box-shadow: 0 1px 1px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s;}
+.chat-bubble:hover { transform: scale(1.02); }
+.chat-bubble.received { background-color: #FFF; align-self: flex-start; border-top-right-radius: 0; color: #111;}
+.chat-bubble.active { border: 2px solid var(--color-accent); }
+.chat-bubble .sender { display: block; font-weight: 600; color: #3498DB; font-size: 0.8rem; margin-bottom: 2px;}
+.chat-bubble .time { display: block; font-size: 0.65rem; color: #999; text-align: left; margin-top: 4px;}
+.chat-input-area { background: #F0F0F0; padding: 10px; }
+.chat-input { background: white; border-radius: 20px; padding: 10px 15px; color: #888; font-size: 0.85rem;}
 
-.black-card {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-light);
-}
+.myth-explanation-box { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 2rem; border-right: 5px solid var(--color-bg-dark);}
+.myth-action { margin-top: 15px; font-weight: 600; color: var(--color-accent); }
 
-.glossary-card dt {
-    font-weight: 700;
-    font-size: 1.1rem;
-    margin-bottom: 5px;
+/* ==========================================================================
+   Screen: Cards Dictionary (Section 3)
+   ========================================================================== */
+.cards-screen { padding: 50px 15px; display: flex; flex-direction: column; align-items: center; overflow: hidden; background: var(--color-bg-light);}
+.cards-title { text-align: center; margin-bottom: 20px;}
+.cards-stack { position: relative; width: 80%; height: 350px; margin-top: 30px;}
+.concept-card {
+    position: absolute; top: 0; left: 0; width: 100%; height: 120px;
+    border-radius: 15px; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; text-align: center; padding: 10px;
+    transition: transform 0.3s, top 0.3s;
+    top: calc(var(--i) * 20px);
+    transform: scale(calc(1 - (5 - var(--i)) * 0.05));
+    z-index: var(--i);
 }
+.concept-card:hover { transform: translateY(-10px) scale(calc(1 - (5 - var(--i)) * 0.05)); }
+.teal-card { background: var(--color-bg-teal); color: var(--color-text-dark); }
+.black-card { background: var(--color-bg-dark); color: var(--color-text-light); }
 
-.glossary-card dd {
-    font-size: 0.9rem;
-    opacity: 0.9;
+.phone-popup {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); z-index: 100; display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: 0.3s;
 }
+.phone-popup.show { opacity: 1; visibility: visible; }
+.popup-content { background: var(--color-bg-light); width: 85%; padding: 20px; border-radius: 15px; position: relative;}
+.close-popup { position: absolute; top: 10px; left: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-dark);}
+#popup-title { color: var(--color-bg-teal); margin-bottom: 10px;}
 
-/* Checklist inside iPhone */
-.checklist-screen {
-    background-color: var(--color-bg-light);
-    padding: 60px 20px 20px;
-}
-
-.checklist-header h3 {
-    text-align: center;
-    color: var(--color-bg-teal);
-    border-bottom: 2px dashed #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.semantic-checklist {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.check-container {
-    display: flex;
-    align-items: flex-start;
-    position: relative;
-    cursor: pointer;
-    font-size: 0.9rem;
-    user-select: none;
-    background: white;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #eee;
-}
-
-.check-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    position: relative;
-    min-width: 24px;
-    height: 24px;
-    background-color: #eee;
-    border-radius: 4px;
-    margin-left: 10px;
-    transition: background-color 0.2s;
-}
-
-.check-container:hover input ~ .checkmark {
-    background-color: #ccc;
-}
-
-.check-container input:checked ~ .checkmark {
-    background-color: var(--color-bg-teal);
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-}
-
-.check-container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.check-container input:checked ~ .text {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
+/* ==========================================================================
+   Screen: Checklist (Section 4)
+   ========================================================================== */
+.checklist-screen { background-color: var(--color-bg-light); padding: 60px 15px 20px; }
+.checklist-header h3 { text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 20px; }
+.semantic-checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.check-container { display: flex; align-items: flex-start; position: relative; cursor: pointer; font-size: 0.85rem; background: white; padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-weight: 500;}
+.check-container input { position: absolute; opacity: 0; height: 0; width: 0; }
+.checkmark { position: relative; min-width: 22px; height: 22px; background-color: #eee; border-radius: 4px; margin-left: 10px; transition: 0.2s; border: 1px solid #aaa;}
+.check-container:hover input ~ .checkmark { background-color: #ddd; }
+.check-container input:checked ~ .checkmark { background-color: var(--color-bg-teal); border-color: var(--color-bg-teal);}
+.checkmark:after { content: ""; position: absolute; display: none; left: 8px; top: 4px; width: 4px; height: 9px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.check-container input:checked ~ .checkmark:after { display: block; }
+.check-container input:checked ~ .text { text-decoration: line-through; opacity: 0.5; }
 
 /* ==========================================================================
    Footer
    ========================================================================== */
-.main-footer {
-    padding: 4rem 2rem;
-    text-align: center;
-}
-
-.footer-content {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.footer-cta {
-    margin-top: 2rem;
-    font-size: 1.2rem;
-    padding: 15px 40px;
-}
-
-/* ==========================================================================
-   Media Queries for Responsiveness
-   ========================================================================== */
-@media (max-width: 1024px) {
-    .split-section {
-        flex-direction: column;
-        text-align: center;
-        gap: 2rem;
-        padding: 4rem 5%;
-    }
-}
-
-@media (max-width: 480px) {
-    h2 { font-size: 2rem; }
-    
-    /* Scale down iPhone for small mobile screens */
-    .iphone-frame {
-        transform: scale(0.9);
-        transform-origin: top center;
-    }
-}
+.main-footer { padding: 4rem 2rem; text-align: center; position: relative; z-index: 10;}
+.footer-content { max-width: 600px; margin: 0 auto; }
