@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Visual toggle for follow button
             if(btn.textContent === 'עקוב') {
-                btn.textContent = 'נעקב';
+                btn.textContent = 'עוקב';
                 btn.style.background = '#ccc';
                 btn.style.color = '#333';
             }
