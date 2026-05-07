@@ -260,9 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       6. Cards Popup (Section 3)
+       6. Cards Popup (Section 3) - Instagram style
        ========================================================================== */
-    const conceptCards = document.querySelectorAll('.concept-card');
+    const followBtns = document.querySelectorAll('.follow-btn');
     const conceptPopup = document.getElementById('concept-popup');
     const popupTitle = document.getElementById('popup-title');
     const popupDesc = document.getElementById('popup-desc');
@@ -276,14 +276,21 @@ document.addEventListener('DOMContentLoaded', () => {
         coalition: { title: "קואליציה vs אופוזיציה", desc: 'הקואליציה הם אלו ש"בממשלה" (הקבוצה ששולטת), והאופוזיציה הם אלו שמבקרים אותם ומנסים להחליף אותם.' }
     };
 
-    conceptCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const conceptKey = card.getAttribute('data-concept');
+    followBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const conceptKey = btn.getAttribute('data-concept');
             const data = conceptsData[conceptKey];
             
             popupTitle.textContent = data.title;
             popupDesc.textContent = data.desc;
             conceptPopup.classList.add('show');
+            
+            // Visual toggle for follow button
+            if(btn.textContent === 'עקוב') {
+                btn.textContent = 'נעקב';
+                btn.style.background = '#ccc';
+                btn.style.color = '#333';
+            }
         });
     });
 

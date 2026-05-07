@@ -208,7 +208,7 @@ h2 { font-size: 2.5rem; }
 .time { font-size: 4.5rem; font-weight: 300; line-height: 1; letter-spacing: -2px; }
 .date { font-size: 1.1rem; font-weight: 500; }
 
-.notifications-area { width: 90%; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.notifications-area { width: 90%; max-width: 320px; display: flex; flex-direction: column; gap: 10px; margin-top: 20px; margin-left: auto; margin-right: auto; }
 .notification { background: var(--color-glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--color-glass-border); border-radius: 18px; padding: 12px; }
 .notif-header { display: flex; align-items: center; font-size: 0.8rem; opacity: 0.8; margin-bottom: 5px; color: var(--color-text-dark);}
 .notif-icon { margin-left: 5px; }
@@ -240,7 +240,7 @@ h2 { font-size: 2.5rem; }
 .friends-counter { font-size: 2rem; font-weight: 700; margin: 20px 0; background: white; padding: 10px; border-radius: 15px; color: var(--color-bg-teal); }
 .styled-slider { -webkit-appearance: none; width: 100%; height: 8px; background: rgba(255,255,255,0.5); border-radius: 5px; outline: none; margin: 20px 0; direction: rtl;}
 .styled-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 50%; background: white; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-.slider-marks { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 600; color: white; flex-direction: row-reverse;}
+.slider-marks { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 600; color: white; flex-direction: row;}
 .graph-visualization { margin-top: 30px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 10px; position: relative; overflow: hidden; }
 .graph-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 10%; background: white; transition: height 0.4s ease; }
 
@@ -268,23 +268,17 @@ h2 { font-size: 2.5rem; }
 .myth-action { margin-top: 15px; font-weight: 600; color: var(--color-accent); }
 
 /* ==========================================================================
-   Screen: Cards Dictionary (Section 3)
+   Screen: Instagram Dictionary (Section 3)
    ========================================================================== */
-.cards-screen { padding: 50px 15px; display: flex; flex-direction: column; align-items: center; overflow: hidden; background: var(--color-bg-light);}
-.cards-title { text-align: center; margin-bottom: 20px;}
-.cards-stack { position: relative; width: 80%; height: 350px; margin-top: 30px;}
-.concept-card {
-    position: absolute; top: 0; left: 0; width: 100%; height: 120px;
-    border-radius: 15px; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; text-align: center; padding: 10px;
-    transition: transform 0.3s, top 0.3s;
-    top: calc(var(--i) * 20px);
-    transform: scale(calc(1 - (5 - var(--i)) * 0.05));
-    z-index: var(--i);
-}
-.concept-card:hover { transform: translateY(-10px) scale(calc(1 - (5 - var(--i)) * 0.05)); }
-.teal-card { background: var(--color-bg-teal); color: var(--color-text-dark); }
-.black-card { background: var(--color-bg-dark); color: var(--color-text-light); }
+.instagram-screen { padding: 40px 15px 20px; display: flex; flex-direction: column; background: var(--color-bg-light); overflow-y: auto;}
+.insta-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 15px;}
+.insta-list { display: flex; flex-direction: column; gap: 15px; width: 100%;}
+.insta-item { display: flex; align-items: center; justify-content: space-between; background: white; padding: 12px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+.insta-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 2px; }
+.insta-avatar::after { content: ''; display: block; width: 100%; height: 100%; background: white; border-radius: 50%; }
+.insta-name { flex-grow: 1; margin-right: 15px; font-weight: 600; font-size: 0.95rem;}
+.follow-btn { background: var(--color-accent); color: white; border: none; padding: 6px 15px; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s;}
+.follow-btn:hover { background: #2980B9; }
 
 .phone-popup {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -292,9 +286,10 @@ h2 { font-size: 2.5rem; }
     opacity: 0; visibility: hidden; transition: 0.3s;
 }
 .phone-popup.show { opacity: 1; visibility: visible; }
-.popup-content { background: var(--color-bg-light); width: 85%; padding: 20px; border-radius: 15px; position: relative;}
+.popup-content { background: var(--color-bg-light); width: 85%; padding: 25px 20px; border-radius: 15px; position: relative;}
 .close-popup { position: absolute; top: 10px; left: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-dark);}
-#popup-title { color: var(--color-bg-teal); margin-bottom: 10px;}
+#popup-title { color: var(--color-bg-teal); margin-bottom: 15px; font-size: 1.2rem; border-bottom: 2px solid var(--color-bg-teal); padding-bottom: 5px; display: inline-block;}
+#popup-desc { font-size: 0.95rem; line-height: 1.5;}
 
 /* ==========================================================================
    Screen: Checklist (Section 4)
@@ -314,5 +309,4 @@ h2 { font-size: 2.5rem; }
 /* ==========================================================================
    Footer
    ========================================================================== */
-.main-footer { padding: 4rem 2rem; text-align: center; position: relative; z-index: 10;}
-.footer-content { max-width: 600px; margin: 0 auto; }
+.main-footer { padding: 4rem 10%; position: relative; z-index: 10; display: flex; align-items: center;}

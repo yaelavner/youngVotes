@@ -75,11 +75,11 @@
                         <!-- In RTL, visually 0 is right, max is left -->
                         <div class="slider-container">
                             <input type="range" id="friends-slider" class="styled-slider" min="0" max="3" value="0" step="1" dir="rtl">
-                            <div class="slider-marks" aria-hidden="true">
-                                <span class="right-mark">רק אני</span>
-                                <span>5</span>
-                                <span>20</span>
-                                <span class="left-mark">כל העוקבים באינסטגרם שלך</span>
+                            <div class="slider-marks" aria-hidden="true" dir="rtl">
+                                <span class="mark-right">רק אני</span>
+                                <span class="mark-mid1">5</span>
+                                <span class="mark-mid2">20</span>
+                                <span class="mark-left">כל העוקבים שלך באינסטגרם</span>
                             </div>
                         </div>
                         <div class="graph-visualization">
@@ -92,7 +92,7 @@
                 <div id="screen-sec2" class="phone-screen whatsapp-screen light-theme">
                     <div class="chat-header">
                         <span class="back-btn">‹</span>
-                        <span class="chat-name">החבר'ה שלא מצביעים</span>
+                        <span class="chat-name">החבר'ה הטובים</span>
                     </div>
                     <div class="chat-body" id="myths-chat">
                         <div class="chat-bubble received actionable active" data-myth="myth1">
@@ -116,24 +116,36 @@
                     </div>
                 </div>
 
-                <!-- Section 3 Screen (Cards) -->
-                <div id="screen-sec3" class="phone-screen cards-screen light-bg">
-                    <h3 class="cards-title dark-text">מילון מושגים</h3>
-                    <div class="cards-stack">
-                        <div class="concept-card teal-card" data-concept="mandate" style="--i: 5;">
-                            <h4>מנדט</h4>
+                <!-- Section 3 Screen (Instagram Dictionary) -->
+                <div id="screen-sec3" class="phone-screen instagram-screen light-bg">
+                    <div class="insta-header">
+                        <h3 class="dark-text">מילון מושגים</h3>
+                    </div>
+                    <div class="insta-list">
+                        <div class="insta-item">
+                            <div class="insta-avatar"></div>
+                            <div class="insta-name dark-text">מנדט</div>
+                            <button class="follow-btn" data-concept="mandate">עקוב</button>
                         </div>
-                        <div class="concept-card black-card" data-concept="hasima" style="--i: 4;">
-                            <h4>אחוז החסימה</h4>
+                        <div class="insta-item">
+                            <div class="insta-avatar"></div>
+                            <div class="insta-name dark-text">אחוז החסימה</div>
+                            <button class="follow-btn" data-concept="hasima">עקוב</button>
                         </div>
-                        <div class="concept-card teal-card" data-concept="matza" style="--i: 3;">
-                            <h4>מצע בחירות</h4>
+                        <div class="insta-item">
+                            <div class="insta-avatar"></div>
+                            <div class="insta-name dark-text">מצע בחירות</div>
+                            <button class="follow-btn" data-concept="matza">עקוב</button>
                         </div>
-                        <div class="concept-card black-card" data-concept="odafim" style="--i: 2;">
-                            <h4>הסכם עודפים</h4>
+                        <div class="insta-item">
+                            <div class="insta-avatar"></div>
+                            <div class="insta-name dark-text">הסכם עודפים</div>
+                            <button class="follow-btn" data-concept="odafim">עקוב</button>
                         </div>
-                        <div class="concept-card teal-card" data-concept="coalition" style="--i: 1;">
-                            <h4>קואליציה vs אופוזיציה</h4>
+                        <div class="insta-item">
+                            <div class="insta-avatar"></div>
+                            <div class="insta-name dark-text">קואליציה vs אופוזיציה</div>
+                            <button class="follow-btn" data-concept="coalition">עקוב</button>
                         </div>
                     </div>
                     
@@ -157,28 +169,28 @@
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">תעודת זהות / רישיון בתוקף.</span>
+                                <span class="text dark-text">תעודת זהות / רישיון / דרכון בתוקף</span>
                             </label>
                         </li>
                         <li>
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">איתור קלפי – תבדקו מראש.</span>
+                                <span class="text dark-text">טלפון נייד: לאיתור הקלפי וסלפי עם מעטפת ה'הצבעתי' – כי אם לא העלתם, זה באמת קרה? (סתם, זה קרה, אבל תעלו בכל זאת)</span>
                             </label>
                         </li>
                         <li>
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">פרגוד – 10 שניות של פרטיות.</span>
+                                <span class="text dark-text">בקבוק שתייה אם יהיה תור בחוץ</span>
                             </label>
                         </li>
                         <li>
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">סלפי עם ה'הצבעתי' – חובה לסטורי.</span>
+                                <span class="text dark-text">פירות, מגבת, קרם הגנה וכל מה שצריך כדי לנצל את היום שבתון אחרי שהצבעת והשפעת.</span>
                             </label>
                         </li>
                     </ol>
@@ -233,8 +245,8 @@
         </section>
 
         <!-- Footer -->
-        <footer class="main-footer black-bg">
-            <div class="footer-content">
+        <footer class="main-footer black-bg content-right-section">
+            <div class="content-side">
                 <h2 class="white-text">העתיד שלכם נכתב עכשיו.</h2>
                 <p class="white-text">אתם מחזיקים את העט, או שאתם נותנים למישהו אחר לשרבט לכם על החיים?</p>
                 <button class="cta-button footer-cta" onclick="window.scrollTo({top:0, behavior:'smooth'})">חזרה להתחלה</button>
