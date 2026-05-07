@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="העתיד שלכם נכתב עכשיו - בואו להצביע ולהשפיע.">
+    <title>Young Votes - הסטורי שלכם נעלם אחרי 24 שעות</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">דלג לתוכן המרכזי</a>
+
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <h1 class="visually-hidden">Young Votes - הסטורי שלכם נעלם אחרי 24 שעות. ההחלטות שלהם יישארו כאן ל-4 שנים</h1>
+            
+            <div class="iphone-container center">
+                <div class="iphone-frame">
+                    <div class="notch"></div>
+                    <div class="screen lock-screen">
+                        <div class="clock-area">
+                            <div class="lock-icon" aria-hidden="true">🔒</div>
+                            <div id="iphone-time" class="time">12:00</div>
+                            <div id="iphone-date" class="date">יום שני, 1 בינואר</div>
+                        </div>
+                        
+                        <div class="notifications-area">
+                            <div class="notification countdown-notification">
+                                <div class="notif-header">
+                                    <span class="notif-icon">🗓️</span>
+                                    <span class="notif-app">בחירות 2026</span>
+                                    <span class="notif-time">עכשיו</span>
+                                </div>
+                                <div class="notif-body">
+                                    <p id="countdown-text">מחשב ימים...</p>
+                                </div>
+                            </div>
+
+                            <div class="notification story-notification">
+                                <div class="notif-header">
+                                    <span class="notif-icon">📱</span>
+                                    <span class="notif-app">תזכורת</span>
+                                    <span class="notif-time">עכשיו</span>
+                                </div>
+                                <div class="notif-body">
+                                    <p class="story-title">הסטורי שלכם נעלם אחרי 24 שעות.</p>
+                                    <p class="story-desc">ההחלטות שלהם יישארו כאן ל-4 שנים. בזמן שאתם ממשיכים לגלול, מישהו אחר קובע לכם איך ייראו הלימודים, השכירות והעתיד.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slider-to-unlock">
+                            <label for="unlock-slider" class="visually-hidden">החלק לפתיחה ולמעבר לתוכן</label>
+                            <span class="unlock-text">החלק לפתיחה</span>
+                            <div class="slider-track">
+                                <input type="range" id="unlock-slider" min="0" max="100" value="0">
+                                <div class="slider-thumb" id="slider-thumb" aria-hidden="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Section 1 -->
+        <section id="section1" class="split-section light-bg">
+            <div class="content-side">
+                <h2>אפקט הפרפר: <br><span class="highlight">הכוח של החבר'ה שלך</span></h2>
+                <div class="text-content-box" aria-live="polite">
+                    <p id="mandate-result-text">הקול שלך הוא התחלה, אבל לבד קשה להזיז הרים.</p>
+                    <p class="bottom-line"><strong>השורה התחתונה:</strong> בבחירות האחרונות, אלפי קולות הלכו לפח רק כי אנשים חשבו ש'הקול שלי לא משנה'. אל תיכנסו לסטטיסטיקה הזו.</p>
+                </div>
+                <button class="cta-button next-section" data-target="#section2">המשך למטה</button>
+            </div>
+            <div class="device-side">
+                <div class="iphone-frame left-aligned">
+                    <div class="notch"></div>
+                    <div class="screen interactive-screen teal-theme">
+                        <div class="mandate-app">
+                            <h3>כמה חברים הבאת?</h3>
+                            <div class="friends-counter">
+                                <span id="friends-count">0</span> חברים
+                            </div>
+                            <label for="friends-slider" class="visually-hidden">בחר כמות חברים</label>
+                            <input type="range" id="friends-slider" class="styled-slider" min="0" max="3" value="0" step="1">
+                            <div class="slider-marks" aria-hidden="true">
+                                <span>רק אני</span>
+                                <span>5</span>
+                                <span>20</span>
+                                <span>כל השכבה</span>
+                            </div>
+                            <div class="graph-visualization">
+                                <div class="graph-bar" id="graph-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="section2" class="split-section teal-bg">
+            <div class="content-side white-text">
+                <h2>שבירת מיתוסים: <br><span class="highlight-white">האמת המבהילה</span></h2>
+                <button class="cta-button light-btn next-section" data-target="#section3">הודעה הבאה</button>
+            </div>
+            <div class="device-side">
+                <div class="iphone-frame left-aligned">
+                    <div class="notch"></div>
+                    <div class="screen myths-screen light-theme">
+                        <div class="accordion" id="myths-accordion">
+                            <div class="accordion-item active">
+                                <button class="accordion-header" aria-expanded="true" aria-controls="myth1-content">
+                                    מיתוס 1: "פתק לבן זה אקט מחאתי חזק"
+                                    <span class="icon" aria-hidden="true">−</span>
+                                </button>
+                                <div id="myth1-content" class="accordion-content" style="max-height: 500px;">
+                                    <p><strong>המציאות:</strong> פתק לבן הוא פשוט פתק פסול. הוא לא נספר במניין הקולות הכשרים ולא משפיע על חלוקת המנדטים.</p>
+                                    <p class="action">רוצים למחות? תצביעו למי שהכי פחות גרוע בעיניכם, או למי שמבטיח לשנות את מה שמעצבן אתכם.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" aria-expanded="false" aria-controls="myth2-content">
+                                    מיתוס 2: "כולם אותו דבר"
+                                    <span class="icon" aria-hidden="true">+</span>
+                                </button>
+                                <div id="myth2-content" class="accordion-content">
+                                    <p><strong>המציאות:</strong> הפער יכול להיות ההבדל בין תחבורה בשבת לסגר, בין סיוע לשכר דירה להתעלמות. השינוי אולי איטי, אבל הוא קורה רק בקלפי.</p>
+                                    <p class="action">רוצים לשנות? תתחילו בלהצביע, ואז תשכנעו חברים.</p>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <button class="accordion-header" aria-expanded="false" aria-controls="myth3-content">
+                                    מיתוס 3: "אין לי כוח, אני בים."
+                                    <span class="icon" aria-hidden="true">+</span>
+                                </button>
+                                <div id="myth3-content" class="accordion-content">
+                                    <p><strong>המציאות:</strong> בזמן שאתם בים, הקבוצות המאורגנות עומדות בקלפי ב-100% הצבעה. הן סופרות על זה שתהיו בים.</p>
+                                    <p class="action">רוצים לנוח? תצביעו חצי שעה ואז תלכו לים.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="section3" class="centered-device-section light-bg">
+            <div class="section-header center-text">
+                <h2>מילון מושגים: <span class="highlight">דברים שלא נעים לשאול</span></h2>
+            </div>
+            <div class="iphone-frame centered-large">
+                <div class="notch"></div>
+                <div class="screen glossary-screen light-theme">
+                    <dl class="glossary-list">
+                        <div class="glossary-card teal-card">
+                            <dt>מנדט</dt>
+                            <dd>המושב בכנסת (יש 120). שווה בערך 35-40 אלף קולות.</dd>
+                        </div>
+                        <div class="glossary-card black-card">
+                            <dt>אחוז החסימה</dt>
+                            <dd>תנאי הסף. פחות מ-3.25%? הקולות נזרקים לפח.</dd>
+                        </div>
+                        <div class="glossary-card teal-card">
+                            <dt>מצע בחירות</dt>
+                            <dd>ה"סטורי" של המפלגה. ההבטחות שלהם (כדאי לבדוק).</dd>
+                        </div>
+                        <div class="glossary-card black-card">
+                            <dt>הסכם עודפים</dt>
+                            <dd>"טינדר של מפלגות". חיבור שאריות קולות למנדט נוסף.</dd>
+                        </div>
+                        <div class="glossary-card teal-card">
+                            <dt>ועדת הבחירות המרכזית</dt>
+                            <dd>המבוגר האחראי. מנהל את האירוע וסופר קולות.</dd>
+                        </div>
+                        <div class="glossary-card black-card">
+                            <dt>קואליציה vs אופוזיציה</dt>
+                            <dd>קואליציה שולטת, אופוזיציה מבקרת ומנסה להחליף.</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="section4" class="centered-device-section teal-bg">
+            <div class="section-header center-text white-text">
+                <h2>מדריך הישרדות ליום הבוחר</h2>
+            </div>
+            <div class="iphone-frame centered-large">
+                <div class="notch"></div>
+                <div class="screen checklist-screen light-theme">
+                    <div class="checklist-header">
+                        <h3>צ'ק ליסט יום בחירות</h3>
+                    </div>
+                    <ol class="semantic-checklist">
+                        <li>
+                            <label class="check-container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="text">תעודת זהות / רישיון בתוקף.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="check-container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="text">איתור קלפי – תבדקו מראש היכן.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="check-container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="text">פרגוד – 10 שניות של פרטיות מוחלטת.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="check-container">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="text">סלפי עם ה'הצבעתי' – חובה לסטורי.</span>
+                            </label>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer black-bg">
+        <div class="footer-content">
+            <h2>העתיד שלכם נכתב עכשיו.</h2>
+            <p>אתם מחזיקים את העט, או שאתם נותנים למישהו אחר לשרבט לכם על החיים?</p>
+            <button class="cta-button footer-cta" onclick="window.scrollTo({top:0, behavior:'smooth'})">צאו להצביע!</button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
