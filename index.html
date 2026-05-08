@@ -116,37 +116,58 @@
                     </div>
                 </div>
 
-                <!-- Section 3 Screen (Instagram Dictionary) -->
-                <div id="screen-sec3" class="phone-screen instagram-screen light-bg">
-                    <div class="insta-header">
-                        <h3 class="dark-text">Suggested For You</h3>
+                <!-- Section 3 Screen (Tinder Dictionary) -->
+                <div id="screen-sec3" class="phone-screen tinder-screen light-bg">
+                    <div class="tinder-header">
+                        <h3 class="dark-text" style="color: #FE3C72 !important; font-family: sans-serif; letter-spacing: -1px;">מומלצים בשבילך</h3>
                     </div>
-                    <div class="insta-list">
-                        <div class="insta-item">
-                            <div class="insta-avatar"></div>
-                            <div class="insta-name dark-text">מנדט</div>
-                            <button class="follow-btn" data-concept="mandate">עקוב</button>
+                    <div class="tinder-cards-container" id="tinder-cards">
+                        <!-- Cards are dynamically injected by JS, or hardcoded. -->
+                        <div class="tinder-card" data-concept="coalition">
+                            <div class="tinder-card-img" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);"></div>
+                            <div class="tinder-card-info">
+                                <h3 class="white-text">קואליציה vs אופוזיציה <span class="tinder-age">24</span></h3>
+                                <p class="white-text">מרחק: 2 ק"מ</p>
+                            </div>
                         </div>
-                        <div class="insta-item">
-                            <div class="insta-avatar"></div>
-                            <div class="insta-name dark-text">אחוז החסימה</div>
-                            <button class="follow-btn" data-concept="hasima">עקוב</button>
+                        <div class="tinder-card" data-concept="odafim">
+                            <div class="tinder-card-img" style="background: linear-gradient(135deg, #4E65FF, #92EFFD);"></div>
+                            <div class="tinder-card-info">
+                                <h3 class="white-text">הסכם עודפים <span class="tinder-age">21</span></h3>
+                                <p class="white-text">מרחק: 5 ק"מ</p>
+                            </div>
                         </div>
-                        <div class="insta-item">
-                            <div class="insta-avatar"></div>
-                            <div class="insta-name dark-text">מצע בחירות</div>
-                            <button class="follow-btn" data-concept="matza">עקוב</button>
+                        <div class="tinder-card" data-concept="matza">
+                            <div class="tinder-card-img" style="background: linear-gradient(135deg, #11998E, #38EF7D);"></div>
+                            <div class="tinder-card-info">
+                                <h3 class="white-text">מצע בחירות <span class="tinder-age">28</span></h3>
+                                <p class="white-text">מרחק: 1 ק"מ</p>
+                            </div>
                         </div>
-                        <div class="insta-item">
-                            <div class="insta-avatar"></div>
-                            <div class="insta-name dark-text">הסכם עודפים</div>
-                            <button class="follow-btn" data-concept="odafim">עקוב</button>
+                        <div class="tinder-card" data-concept="hasima">
+                            <div class="tinder-card-img" style="background: linear-gradient(135deg, #FF9A9E, #FECFEF);"></div>
+                            <div class="tinder-card-info">
+                                <h3 class="white-text">אחוז החסימה <span class="tinder-age">22</span></h3>
+                                <p class="white-text">מרחק: 8 ק"מ</p>
+                            </div>
                         </div>
-                        <div class="insta-item">
-                            <div class="insta-avatar"></div>
-                            <div class="insta-name dark-text">קואליציה vs אופוזיציה</div>
-                            <button class="follow-btn" data-concept="coalition">עקוב</button>
+                        <div class="tinder-card" data-concept="mandate">
+                            <div class="tinder-card-img" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);"></div>
+                            <div class="tinder-card-info">
+                                <h3 class="white-text">מנדט <span class="tinder-age">20</span></h3>
+                                <p class="white-text">מרחק: קרוב אלייך</p>
+                            </div>
                         </div>
+                        
+                        <div class="tinder-empty-state dark-text">
+                            <p>אין יותר מושגים באזורך!</p>
+                            <button id="reset-tinder">חפש שוב</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tinder-buttons">
+                        <button class="tinder-btn nope" id="tinder-nope">❌</button>
+                        <button class="tinder-btn like" id="tinder-like">❤️</button>
                     </div>
                     
                     <!-- Popup modal in phone -->

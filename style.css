@@ -277,17 +277,26 @@ h2 { font-size: 2.5rem; }
 .myth-action { margin-top: 15px; font-weight: 600; color: var(--color-accent); }
 
 /* ==========================================================================
-   Screen: Instagram Dictionary (Section 3)
+   Screen: Tinder Dictionary (Section 3)
    ========================================================================== */
-.instagram-screen { padding: 40px 15px 20px; display: flex; flex-direction: column; background: var(--color-bg-light); overflow-y: auto;}
-.insta-header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 15px;}
-.insta-list { display: flex; flex-direction: column; gap: 15px; width: 100%;}
-.insta-item { display: flex; align-items: center; justify-content: space-between; background: white; padding: 12px 15px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-.insta-avatar { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); padding: 2px; }
-.insta-avatar::after { content: ''; display: block; width: 100%; height: 100%; background: white; border-radius: 50%; }
-.insta-name { flex-grow: 1; margin-right: 15px; font-weight: 600; font-size: 0.95rem;}
-.follow-btn { background: var(--color-accent); color: white; border: none; padding: 6px 15px; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s;}
-.follow-btn:hover { background: #2980B9; }
+.tinder-screen { padding: 40px 15px 20px; display: flex; flex-direction: column; background: #fff; overflow-y: hidden; }
+.tinder-header { text-align: center; margin-bottom: 15px; }
+.tinder-cards-container { flex-grow: 1; position: relative; width: 100%; max-width: 300px; margin: 0 auto; display: flex; justify-content: center; align-items: center;}
+.tinder-card { position: absolute; width: 100%; height: 380px; border-radius: 15px; overflow: hidden; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: 50% 100%; }
+.tinder-card-img { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+.tinder-card-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); z-index: 2; text-align: right; }
+.tinder-card-info h3 { margin-bottom: 5px; font-size: 1.3rem; display: flex; align-items: center;}
+.tinder-age { font-weight: 300; font-size: 1.1rem; margin-right: 8px;}
+.tinder-card-info p { font-size: 0.9rem; opacity: 0.9; }
+
+.tinder-empty-state { text-align: center; position: absolute; width: 100%; top: 50%; transform: translateY(-50%); z-index: 0;}
+#reset-tinder { margin-top: 15px; padding: 10px 20px; background: #FE3C72; color: white; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; }
+
+.tinder-buttons { display: flex; justify-content: center; gap: 20px; margin-top: 20px; margin-bottom: 20px; }
+.tinder-btn { width: 60px; height: 60px; border-radius: 50%; border: none; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); font-size: 1.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
+.tinder-btn:active { transform: scale(0.9); }
+.tinder-btn.nope { color: #fd5c63; }
+.tinder-btn.like { color: #11EB92; }
 
 .phone-popup {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;

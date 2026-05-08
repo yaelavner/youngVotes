@@ -260,9 +260,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       6. Cards Popup (Section 3) - Instagram style
+       6. Tinder Cards (Section 3)
        ========================================================================== */
-    const followBtns = document.querySelectorAll('.follow-btn');
+    const tinderCards = document.querySelectorAll('.tinder-card');
+    const btnNope = document.getElementById('tinder-nope');
+    const btnLike = document.getElementById('tinder-like');
+    const resetTinder = document.getElementById('reset-tinder');
+    
     const conceptPopup = document.getElementById('concept-popup');
     const popupTitle = document.getElementById('popup-title');
     const popupDesc = document.getElementById('popup-desc');
@@ -276,22 +280,56 @@ document.addEventListener('DOMContentLoaded', () => {
         coalition: { title: "קואליציה vs אופוזיציה", desc: 'הקואליציה הם אלו ש"בממשלה" (הקבוצה ששולטת), והאופוזיציה הם אלו שמבקרים אותם ומנסים להחליף אותם.' }
     };
 
-    followBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const conceptKey = btn.getAttribute('data-concept');
-            const data = conceptsData[conceptKey];
-            
-            popupTitle.textContent = data.title;
-            popupDesc.textContent = data.desc;
-            conceptPopup.classList.add('show');
-            
-            // Visual toggle for follow button
-            if(btn.textContent === 'עקוב') {
-                btn.textContent = 'עוקב';
-                btn.style.background = '#ccc';
-                btn.style.color = '#333';
-            }
+    let activeCards = Array.from(tinderCards);
+
+    function initCards() {
+        activeCards.forEach((card, index) => {
+            card.style.zIndex = activeCards.length - index;
+            card.style.transform = `scale(${1 - index * 0.05}) translateY(${index * 15}px)`;
+            card.style.opacity = 1 - index * 0.2;
+            card.style.display = 'block';
         });
+    }
+
+    initCards();
+
+    function handleSwipe(isLike) {
+        if (activeCards.length === 0) return;
+        
+        const currentCard = activeCards[0];
+        
+        // Swipe animation
+        if (isLike) {
+            currentCard.style.transform = 'translate(150%, -50px) rotate(30deg)';
+            currentCard.style.opacity = '0';
+        } else {
+            currentCard.style.transform = 'translate(-150%, -50px) rotate(-30deg)';
+            currentCard.style.opacity = '0';
+        }
+        
+        setTimeout(() => {
+            currentCard.style.display = 'none';
+            if (isLike) {
+                const conceptKey = currentCard.getAttribute('data-concept');
+                const data = conceptsData[conceptKey];
+                if (data) {
+                    popupTitle.textContent = data.title;
+                    popupDesc.textContent = data.desc;
+                    conceptPopup.classList.add('show');
+                }
+            }
+        }, 300);
+
+        activeCards.shift();
+        initCards();
+    }
+
+    btnNope.addEventListener('click', () => handleSwipe(false));
+    btnLike.addEventListener('click', () => handleSwipe(true));
+
+    resetTinder.addEventListener('click', () => {
+        activeCards = Array.from(tinderCards);
+        initCards();
     });
 
     closePopupBtn.addEventListener('click', () => {
