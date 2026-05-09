@@ -25,13 +25,15 @@
     --iphone-width: 340px;
     --iphone-height: 700px;
     --iphone-border-radius: 40px;
+
+    --header-height: 55px;
 }
 
 /* ==========================================================================
    Reset & Base Styles
    ========================================================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); font-size: 16px; }
 body {
     font-family: var(--font-primary);
     background-color: var(--color-bg-light);
@@ -71,10 +73,126 @@ h2 { font-size: 2.5rem; }
 }
 .cta-button:hover { transform: translateY(-2px); opacity: 0.9; }
 
-.footer-cta { background-color: var(--color-blue); color: var(--color-text-light); }
+.footer-cta { background-color: var(--color-gold); color: var(--color-text-dark); margin-top: 1.5rem; }
 
 @media (min-width: 1025px) {
     #section3 h2.dark-text { color: var(--color-white) !important; }
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.hamburger-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1001; /* Keep above the dropdown */
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--color-text-dark);
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger animation classes */
+.hamburger-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover, .main-nav a:active {
+    color: var(--color-blue);
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        justify-content: flex-end; /* Align hamburger to right */
+        padding: 0 20px;
+    }
+    
+    .hamburger-btn {
+        display: block;
+    }
+
+    .main-nav {
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        transform: translateY(-150%); /* Hidden initially */
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .main-nav.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px 0;
+        font-size: 1.1rem;
+    }
 }
 
 /* ==========================================================================
@@ -82,10 +200,10 @@ h2 { font-size: 2.5rem; }
    ========================================================================== */
 #sticky-phone-container {
     position: fixed;
-    top: 0;
+    top: var(--header-height);
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - var(--header-height));
     pointer-events: none;
     z-index: 100;
 }
@@ -102,7 +220,7 @@ h2 { font-size: 2.5rem; }
 #sticky-phone-container::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: calc(-1 * var(--header-height)); left: 0; width: 100vw; height: 100vh;
     background-image: url('backGround.png');
     background-size: cover;
     background-position: center;

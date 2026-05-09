@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+
     /* ==========================================================================
        1. Custom Slide to Unlock Logic
        ========================================================================== */
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchmove', handleMove, {passive: true});
     document.addEventListener('touchend', handleEnd);
 
-    function unlockAction() {
+    function unlockAction(skipScroll = false) {
         isUnlocked = true;
         // 1. Remove lock state
         document.body.classList.remove('locked-state');
@@ -70,9 +71,43 @@ document.addEventListener('DOMContentLoaded', () => {
         mainContent.classList.remove('hidden-until-unlock');
         
         // 3. Scroll to Section 1 which will trigger the IntersectionObserver to shrink the phone
-        setTimeout(() => {
-            document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        if (!skipScroll) {
+            setTimeout(() => {
+                document.getElementById('section1').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+    }
+
+    /* ==========================================================================
+       0. Navigation Logic
+       ========================================================================== */
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mainNav = document.getElementById('main-nav');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    if (hamburgerBtn && mainNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            mainNav.classList.toggle('open');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                hamburgerBtn.classList.remove('active');
+                mainNav.classList.remove('open');
+                
+                if (!isUnlocked) {
+                    e.preventDefault();
+                    unlockAction(true);
+                    
+                    const targetId = link.getAttribute('href').substring(1);
+                    setTimeout(() => {
+                        const targetElement = document.getElementById(targetId);
+                        if(targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            });
+        });
     }
 
     /* ==========================================================================
