@@ -2,14 +2,20 @@
    CSS Variables
    ========================================================================== */
 :root {
-    --color-bg-light: #FFFBEB; /* Warm Beige / Cream */
-    --color-bg-teal: #76D7C4; /* Vibrant Teal */
-    --color-bg-dark: #1A1A1A; /* Near Black */
+    --color-blue: #3174E6;
+    --color-gold: #FFD700;
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-lightblue: #87CEFA;
+
+    --color-bg-light: var(--color-white);
+    --color-bg-teal: var(--color-lightblue);
+    --color-bg-dark: var(--color-black);
     
-    --color-text-dark: #1A1A1A;
-    --color-text-light: #FFFFFF;
+    --color-text-dark: var(--color-black);
+    --color-text-light: var(--color-white);
     
-    --color-accent: #3498DB; 
+    --color-accent: var(--color-gold); 
     
     --color-glass-bg: rgba(255, 255, 255, 0.6);
     --color-glass-border: rgba(255, 255, 255, 0.8);
@@ -46,19 +52,28 @@ body.locked-state {
 
 h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
 h2 { font-size: 2.5rem; }
-.highlight { color: var(--color-bg-teal); }
-.highlight-white { color: var(--color-text-light); }
+.highlight { color: var(--color-accent); }
+.highlight-gold { color: var(--color-gold); }
+.highlight-blue { color: var(--color-blue); }
 .dark-text { color: var(--color-text-dark) !important; }
 .white-text { color: var(--color-text-light) !important; }
 
-.light-bg { background-color: var(--color-bg-light); }
-.teal-bg { background-color: var(--color-bg-teal); }
-.black-bg { background-color: var(--color-bg-dark); color: var(--color-text-light); }
+.bg-blue { background-color: var(--color-blue); }
+.bg-lightblue { background-color: var(--color-lightblue); }
+.bg-white { background-color: var(--color-white); }
+.bg-gold { background-color: var(--color-gold); }
+.bg-black { background-color: var(--color-black); color: var(--color-text-light); }
 
 .cta-button {
-    display: inline-block; padding: 12px 30px; background-color: var(--color-accent); color: var(--color-text-light); border: none; border-radius: 30px; font-size: 1.1rem; font-family: var(--font-primary); font-weight: 600; cursor: pointer; transition: 0.2s;
+    display: inline-block; padding: 12px 30px; background-color: var(--color-accent); color: var(--color-text-dark); border: none; border-radius: 30px; font-size: 1.1rem; font-family: var(--font-primary); font-weight: 600; cursor: pointer; transition: 0.2s;
 }
 .cta-button:hover { transform: translateY(-2px); opacity: 0.9; }
+
+.footer-cta { background-color: var(--color-blue); color: var(--color-text-light); }
+
+@media (min-width: 1025px) {
+    #section3 h2.dark-text { color: var(--color-white) !important; }
+}
 
 /* ==========================================================================
    Sticky Phone Architecture
@@ -86,7 +101,7 @@ h2 { font-size: 2.5rem; }
     content: "";
     position: absolute;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    background-image: url('heroBG.png');
+    background-image: url('backGround.png');
     background-size: cover;
     background-position: center;
     opacity: 0;
@@ -253,12 +268,10 @@ h2 { font-size: 2.5rem; }
     }
 
     /* Assign section-specific tinted backgrounds to the cards */
-    #section1 .content-side, #section3 .content-side {
-        background: rgba(255, 251, 235, 0.95); /* Tinted with light beige */
-    }
-    #section2 .content-side, #section4 .content-side {
-        background: rgba(235, 252, 248, 0.95); /* Tinted with very light teal */
-    }
+    #section1 .content-side { background: rgba(255, 255, 255, 0.95); }
+    #section2 .content-side { background: rgba(255, 255, 255, 0.95); }
+    #section3 .content-side { background: rgba(240, 240, 240, 0.95); }
+    #section4 .content-side { background: rgba(255, 255, 255, 0.95); }
 
     /* Footer adjustment */
     .main-footer {
