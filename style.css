@@ -55,6 +55,7 @@ h2 { font-size: 2.5rem; }
 .highlight { color: var(--color-accent); }
 .highlight-gold { color: var(--color-gold); }
 .highlight-blue { color: var(--color-blue); }
+.highlight-lightblue { color: var(--color-lightblue); }
 .dark-text { color: var(--color-text-dark) !important; }
 .white-text { color: var(--color-text-light) !important; }
 
