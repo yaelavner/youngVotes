@@ -158,6 +158,23 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionObserver.observe(section);
     });
 
+    const footer = document.querySelector('.main-footer');
+    if (footer) {
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    stickyContainer.classList.add('hide-phone');
+                } else {
+                    stickyContainer.classList.remove('hide-phone');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1
+        });
+        footerObserver.observe(footer);
+    }
+
     /* ==========================================================================
        3. iPhone Live Clock & Countdown
        ========================================================================== */
