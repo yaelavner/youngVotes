@@ -85,6 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.getElementById('main-nav');
     const navLinks = document.querySelectorAll('.nav-link');
 
+    // Flag to prevent the IntersectionObserver from changing the active nav
+    // link while the user is scrolling to a clicked target.
+    let isScrollingToTarget = false;
+    let scrollEndTimer = null;
+
+    function setActiveNavLink(targetHref) {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            if (link.getAttribute('href') === targetHref) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    function onScrollEnd() {
+        isScrollingToTarget = false;
+    }
+
     if (hamburgerBtn && mainNav) {
         hamburgerBtn.addEventListener('click', () => {
             hamburgerBtn.classList.toggle('active');
@@ -95,20 +114,41 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', (e) => {
                 hamburgerBtn.classList.remove('active');
                 mainNav.classList.remove('open');
-                
+
+                const targetHref = link.getAttribute('href');
+                const targetId = targetHref.substring(1);
+
+                // Lock observer updates and immediately mark only this link as active
+                isScrollingToTarget = true;
+                setActiveNavLink(targetHref);
+
+                // Clear any previous scroll-end timer
+                clearTimeout(scrollEndTimer);
+
                 if (!isUnlocked) {
                     e.preventDefault();
                     unlockAction(true);
-                    
-                    const targetId = link.getAttribute('href').substring(1);
                     setTimeout(() => {
                         const targetElement = document.getElementById(targetId);
-                        if(targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+                        if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+                        // Fallback: release lock after generous timeout
+                        scrollEndTimer = setTimeout(onScrollEnd, 1200);
                     }, 100);
+                } else {
+                    // Fallback: release lock after generous timeout
+                    scrollEndTimer = setTimeout(onScrollEnd, 1200);
                 }
             });
         });
     }
+
+    // Release the lock as soon as smooth-scroll finishes
+    window.addEventListener('scrollend', () => {
+        if (isScrollingToTarget) {
+            clearTimeout(scrollEndTimer);
+            onScrollEnd();
+        }
+    });
 
     /* ==========================================================================
        2. Sticky Phone & Scroll Observer Logic
@@ -152,14 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Handle Nav Link Active State
-                const sectionId = entry.target.id;
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
+                // Skip if we're in the middle of a programmatic scroll-to-target
+                if (!isScrollingToTarget) {
+                    const sectionId = entry.target.id;
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
             }
         });
     }, observerOptions);
