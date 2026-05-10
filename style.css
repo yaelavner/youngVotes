@@ -2173,4 +2173,39 @@ max-width: 100%;
     #myth-exp-action {
         font-size: 1.05rem !important;
     }
+
+    /* --- הוספות חדשות לסוף הקובץ --- */
+
+
+}
+
+.custom-logo {
+    /* מיקום */
+    display: flex !important;
+    flex-direction: row !important;
+    /* טקסט ואז אמוג'י */
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    /* הצמדה לימין */
+    position: absolute !important;
+    right: 20px;
+    /* המרחק מהגבול הימני - שנה לפי הצורך */
+    top: 50%;
+    transform: translateY(-50%);
+    /* מרכז אותו אנכית */
+
+    /* עיצוב הטקסט */
+    font-weight: bold;
+    gap: 8px;
+    /* רווח בין OTE לאמוג'י */
+    white-space: nowrap;
+    /* מונע שבירת שורה */
+}
+
+/* מוודא שהאמוג'י עומד ישר ולא מושפע מה-RTL של האתר */
+.custom-logo span,
+.custom-logo .emoji {
+    display: inline-block;
+    direction: ltr;
 }
