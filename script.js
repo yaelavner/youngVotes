@@ -150,6 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         screen.classList.remove('active-screen');
                     }
                 });
+
+                // Handle Nav Link Active State
+                const sectionId = entry.target.id;
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    if (link.getAttribute('href') === `#${sectionId}`) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
             }
         });
     }, observerOptions);

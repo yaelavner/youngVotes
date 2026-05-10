@@ -131,6 +131,28 @@ h2 { font-size: 2.5rem; }
     list-style: none;
     display: flex;
     gap: 2rem;
+    align-items: flex-end;
+}
+
+.main-nav li {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px; /* Room for the slot */
+}
+
+/* The ballot slot - thick horizontal line */
+.main-nav li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    width: 110%;
+    height: 6px;
+    background-color: #222;
+    border-radius: 3px;
+    z-index: 3;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5); /* Make it look like a deep slot */
 }
 
 .main-nav a {
@@ -138,11 +160,31 @@ h2 { font-size: 2.5rem; }
     color: var(--color-text-dark);
     font-weight: 600;
     font-size: 1.05rem;
-    transition: color 0.3s;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 8px 15px;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+    transform: translateY(0);
 }
 
-.main-nav a:hover, .main-nav a:active {
+.main-nav a:hover {
     color: var(--color-blue);
+}
+
+.main-nav a.active {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #ccc;
+    border-bottom: none;
+    transform: translateY(-8px);
+    padding-bottom: 13px; /* Extend into the slot */
+    margin-bottom: -5px; /* Counter the padding so layout doesn't shift */
+    z-index: 2;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
 }
 
 @media (max-width: 768px) {
@@ -186,12 +228,27 @@ h2 { font-size: 2.5rem; }
         width: 100%;
         text-align: center;
         border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding-bottom: 0;
+    }
+
+    .main-nav li::after {
+        display: none; /* Hide ballot slot on mobile */
     }
 
     .main-nav a {
         display: block;
         padding: 15px 0;
         font-size: 1.1rem;
+    }
+    
+    .main-nav a.active {
+        transform: translateY(0);
+        padding-bottom: 15px;
+        margin-bottom: 0;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+        color: var(--color-blue);
     }
 }
 
