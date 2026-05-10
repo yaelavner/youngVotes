@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="העתיד שלכם נכתב עכשיו - בואו להצביע ולהשפיע.">
     <title>Young Votes - הסטורי שלכם נעלם אחרי 24 שעות</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="locked-state">
     <a href="#main-content" class="skip-link">דלג לתוכן המרכזי</a>
 
@@ -38,7 +40,7 @@
         <div class="iphone-frame">
             <div class="notch"></div>
             <div class="screen-container">
-                
+
                 <!-- Hero Screen (Lock Screen - Light Mode) -->
                 <div id="screen-hero" class="phone-screen lock-screen active-screen">
                     <div class="clock-area">
@@ -46,7 +48,7 @@
                         <div id="iphone-time" class="time">12:00</div>
                         <div id="iphone-date" class="date">יום שני, 1 בינואר</div>
                     </div>
-                    
+
                     <div class="notifications-area">
                         <div class="notification countdown-notification">
                             <div class="notif-header">
@@ -67,14 +69,15 @@
                             </div>
                             <div class="notif-body">
                                 <p class="story-title dark-text">הסטורי שלכם נעלם אחרי 24 שעות.</p>
-                                <p class="story-desc dark-text">ההחלטות שלהם יישארו כאן ל-4 שנים. בזמן שאתם גוללים, מישהו אחר קובע לכם את העתיד.</p>
+                                <p class="story-desc dark-text">ההחלטות שלהם יישארו כאן ל-4 שנים. בזמן שאתם גוללים,
+                                    מישהו אחר קובע לכם את העתיד.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="slider-to-unlock" id="custom-slider-container">
-                        <span class="unlock-text">החלק לפתיחה</span>
                         <div class="slider-track" id="slider-track">
+                            <span class="unlock-text">החלק לפתיחה</span>
                             <div class="slider-thumb" id="slider-thumb" aria-hidden="true"></div>
                             <div class="slider-fill" id="slider-fill"></div>
                         </div>
@@ -91,7 +94,8 @@
                         <label for="friends-slider" class="visually-hidden">בחר כמות חברים</label>
                         <!-- In RTL, visually 0 is right, max is left -->
                         <div class="slider-container">
-                            <input type="range" id="friends-slider" class="styled-slider" min="0" max="3" value="0" step="1" dir="rtl">
+                            <input type="range" id="friends-slider" class="styled-slider" min="0" max="3" value="0"
+                                step="1" dir="rtl">
                             <div class="slider-marks" aria-hidden="true" dir="rtl">
                                 <span class="mark-right">רק אני</span>
                                 <span class="mark-mid1">5</span>
@@ -136,57 +140,69 @@
                 <!-- Section 3 Screen (Tinder Dictionary) -->
                 <div id="screen-sec3" class="phone-screen tinder-screen light-bg">
                     <div class="tinder-header">
-                        <h3 class="dark-text" style="color: #FE3C72 !important; font-family: sans-serif; letter-spacing: -1px;">מומלצים בשבילך</h3>
+                        <h3 class="dark-text"
+                            style="color: #FE3C72 !important; font-family: sans-serif; letter-spacing: -1px;">מומלצים
+                            בשבילך</h3>
                     </div>
                     <div class="tinder-cards-container" id="tinder-cards">
                         <!-- Cards are dynamically injected by JS, or hardcoded. -->
                         <div class="tinder-card" data-concept="coalition">
-                            <div class="tinder-card-img" style="background: linear-gradient(135deg, var(--color-blue), var(--color-lightblue));"></div>
+                            <div class="tinder-card-img"
+                                style="background: linear-gradient(135deg, var(--color-blue), var(--color-lightblue));">
+                            </div>
                             <div class="tinder-card-info">
                                 <h3 class="white-text">קואליציה vs אופוזיציה <span class="tinder-age">24</span></h3>
                                 <p class="white-text">מרחק: 2 ק"מ</p>
                             </div>
                         </div>
                         <div class="tinder-card" data-concept="odafim">
-                            <div class="tinder-card-img" style="background: linear-gradient(135deg, var(--color-gold), var(--color-white));"></div>
+                            <div class="tinder-card-img"
+                                style="background: linear-gradient(135deg, var(--color-gold), var(--color-white));">
+                            </div>
                             <div class="tinder-card-info">
                                 <h3 class="white-text">הסכם עודפים <span class="tinder-age">21</span></h3>
                                 <p class="white-text">מרחק: 5 ק"מ</p>
                             </div>
                         </div>
                         <div class="tinder-card" data-concept="matza">
-                            <div class="tinder-card-img" style="background: linear-gradient(135deg, var(--color-black), var(--color-blue));"></div>
+                            <div class="tinder-card-img"
+                                style="background: linear-gradient(135deg, var(--color-black), var(--color-blue));">
+                            </div>
                             <div class="tinder-card-info">
                                 <h3 class="white-text">מצע בחירות <span class="tinder-age">28</span></h3>
                                 <p class="white-text">מרחק: 1 ק"מ</p>
                             </div>
                         </div>
                         <div class="tinder-card" data-concept="hasima">
-                            <div class="tinder-card-img" style="background: linear-gradient(135deg, var(--color-lightblue), var(--color-black));"></div>
+                            <div class="tinder-card-img"
+                                style="background: linear-gradient(135deg, var(--color-lightblue), var(--color-black));">
+                            </div>
                             <div class="tinder-card-info">
                                 <h3 class="white-text">אחוז החסימה <span class="tinder-age">22</span></h3>
                                 <p class="white-text">מרחק: 8 ק"מ</p>
                             </div>
                         </div>
                         <div class="tinder-card" data-concept="mandate">
-                            <div class="tinder-card-img" style="background: linear-gradient(135deg, var(--color-gold), var(--color-lightblue));"></div>
+                            <div class="tinder-card-img"
+                                style="background: linear-gradient(135deg, var(--color-gold), var(--color-lightblue));">
+                            </div>
                             <div class="tinder-card-info">
                                 <h3 class="white-text">מנדט <span class="tinder-age">20</span></h3>
                                 <p class="white-text">מרחק: קרוב אלייך</p>
                             </div>
                         </div>
-                        
+
                         <div class="tinder-empty-state dark-text">
                             <p>אין יותר מושגים באזורך!</p>
                             <button id="reset-tinder">חפש שוב</button>
                         </div>
                     </div>
-                    
+
                     <div class="tinder-buttons">
                         <button class="tinder-btn nope" id="tinder-nope">❌</button>
                         <button class="tinder-btn like" id="tinder-like">❤️</button>
                     </div>
-                    
+
                     <!-- Popup modal in phone -->
                     <div class="phone-popup" id="concept-popup">
                         <div class="popup-content">
@@ -214,7 +230,8 @@
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">טלפון נייד: לאיתור הקלפי וסלפי עם מעטפת ה'הצבעתי' – כי אם לא העלתם, זה באמת קרה? (סתם, זה קרה, אבל תעלו בכל זאת)</span>
+                                <span class="text dark-text">טלפון נייד: לאיתור הקלפי וסלפי עם מעטפת ה'הצבעתי' – כי אם
+                                    לא העלתם, זה באמת קרה? (סתם, זה קרה, אבל תעלו בכל זאת)</span>
                             </label>
                         </li>
                         <li>
@@ -228,7 +245,8 @@
                             <label class="check-container">
                                 <input type="checkbox">
                                 <span class="checkmark"></span>
-                                <span class="text dark-text">פירות, מגבת, קרם הגנה וכל מה שצריך כדי לנצל את היום שבתון אחרי שהצבעת והשפעת.</span>
+                                <span class="text dark-text">פירות, מגבת, קרם הגנה וכל מה שצריך כדי לנצל את היום שבתון
+                                    אחרי שהצבעת והשפעת.</span>
                             </label>
                         </li>
                     </ol>
@@ -240,28 +258,33 @@
 
     <!-- Scrollable Content - Hidden initially -->
     <main id="main-content" class="scroll-sections hidden-until-unlock">
-        
+
         <!-- Section 1 -->
         <section id="section1" class="scroll-section content-right-section bg-white" data-screen="screen-sec1">
             <div class="content-side">
                 <h2 class="dark-text">אפקט הפרפר: <br><span class="highlight-blue">הכוח של החבר'ה שלך</span></h2>
                 <div class="text-content-box" aria-live="polite">
-                    <p id="dynamic-main-text" class="large-dynamic-text dark-text">הקול שלך הוא התחלה, אבל לבד קשה להזיז הרים.</p>
-                    <p id="dynamic-bottom-line" class="bottom-line dark-text"><strong>השורה התחתונה:</strong> בבחירות האחרונות, אלפי קולות הלכו לפח רק כי אנשים חשבו ש'הקול שלי לא משנה'. אל תיכנסו לסטטיסטיקה הזו.</p>
+                    <p id="dynamic-main-text" class="large-dynamic-text dark-text">הקול שלך הוא התחלה, אבל לבד קשה להזיז
+                        הרים.</p>
+                    <p id="dynamic-bottom-line" class="bottom-line dark-text"><strong>השורה התחתונה:</strong> בבחירות
+                        האחרונות, אלפי קולות הלכו לפח רק כי אנשים חשבו ש'הקול שלי לא משנה'. אל תיכנסו לסטטיסטיקה הזו.
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- Section 2 -->
-        <section id="section2" class="scroll-section content-right-section bg-gold" data-screen="screen-sec2">
+        <section id="section2" class="scroll-section content-right-section bg-lightgold" data-screen="screen-sec2">
             <div class="content-side">
                 <h2 class="dark-text">שבירת מיתוסים: <br><span class="highlight-blue">האמת המבהילה</span></h2>
                 <p class="dark-text subtitle-text">לחץ על ההודעות בטלפון כדי לראות את האמת.</p>
-                
+
                 <div id="myth-explanation" class="myth-explanation-box">
                     <h3 id="myth-exp-title" class="dark-text">מיתוס: "פתק לבן זה אקט מחאתי חזק"</h3>
-                    <p id="myth-exp-reality" class="dark-text">המציאות: פתק לבן הוא פשוט פתק פסול. הוא לא נספר במניין הקולות הכשרים ולא משפיע על חלוקת המנדטים.</p>
-                    <p id="myth-exp-action" class="myth-action dark-text">איך שוברים אותו: מסבירים שמי ששם פתק לבן בעצם נותן את הקול שלו למי שהוא הכי שונא.</p>
+                    <p id="myth-exp-reality" class="dark-text">המציאות: פתק לבן הוא פשוט פתק פסול. הוא לא נספר במניין
+                        הקולות הכשרים ולא משפיע על חלוקת המנדטים.</p>
+                    <p id="myth-exp-action" class="myth-action dark-text">איך שוברים אותו: מסבירים שמי ששם פתק לבן בעצם
+                        נותן את הקול שלו למי שהוא הכי שונא.</p>
                 </div>
             </div>
         </section>
@@ -270,14 +293,16 @@
         <section id="section3" class="scroll-section content-right-section bg-blue" data-screen="screen-sec3">
             <div class="content-side">
                 <h2 class="dark-text">מילון מושגים: <br><span class="highlight-gold">דברים שלא נעים לשאול</span></h2>
-                <p class="dark-text subtitle-text">תעשה לייק למושג שאתה רוצה להכיר מקרוב ;)</p>
+                <p class="white-text subtitle-text" style="font-size: 1.5rem !important;">תעשה לייק למושג שאתה רוצה
+                    להכיר מקרוב ;)</p>
             </div>
         </section>
 
         <!-- Section 4 -->
         <section id="section4" class="scroll-section content-right-section bg-lightblue" data-screen="screen-sec4">
             <div class="content-side">
-                <h2><span class="dark-text">רשימת ציוד:</span><br><span class="blue-text">בואו להתארגן איתי ליום בחירות</span></h2>
+                <h2><span class="dark-text">רשימת ציוד:</span><br><span style="color: #002266;">בואו להתארגן איתי ליום
+                        בחירות</span></h2>
                 <p class="dark-text subtitle-text">סמנו וי בטלפון על כל מה שהכנתם, כדי שלא תשכחו כלום ברגע האמת.</p>
             </div>
         </section>
@@ -287,14 +312,17 @@
             <div class="content-side">
                 <h2 class="white-text">העתיד שלכם נכתב עכשיו.</h2>
                 <p class="white-text">אתם מחזיקים את העט, או שאתם נותנים למישהו אחר לשרבט לכם על החיים?</p>
-                <button class="cta-button footer-cta" onclick="window.scrollTo({top:0, behavior:'smooth'})">חזרה להתחלה</button>
+                <button class="cta-button footer-cta" onclick="window.scrollTo({top:0, behavior:'smooth'})">חזרה
+                    להתחלה</button>
             </div>
             <div class="footer-credits white-text">
                 <p>האתר נבנה על ידי אירית פישמן ויעל אבנר<br>במסגרת קורס פיתוח אתרי אינטרנט 13304</p>
                 <p class="footer-social-text">יש אותנו רק באינסטגרם בינתיים ;)</p>
                 <div class="footer-social-links">
-                    <a href="https://www.instagram.com/irit.fishman?igsh=YmpqczZzMzNveDd4&utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-insta-link">אירית</a>
-                    <a href="https://www.instagram.com/yael.avner?igsh=MzhpNmp2M2YwNmp4&utm_source=qr" target="_blank" rel="noopener noreferrer" class="footer-insta-link">יעל</a>
+                    <a href="https://www.instagram.com/irit.fishman?igsh=YmpqczZzMzNveDd4&utm_source=qr" target="_blank"
+                        rel="noopener noreferrer" class="footer-insta-link">אירית</a>
+                    <a href="https://www.instagram.com/yael.avner?igsh=MzhpNmp2M2YwNmp4&utm_source=qr" target="_blank"
+                        rel="noopener noreferrer" class="footer-insta-link">יעל</a>
                 </div>
             </div>
         </footer>
@@ -303,4 +331,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
