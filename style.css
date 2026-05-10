@@ -624,3 +624,49 @@ h2 { font-size: 2.5rem; }
         text-align: center;
     }
 }
+
+/* Instagram links in footer */
+.footer-social-text {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    opacity: 0.85;
+    font-style: italic;
+}
+
+.footer-social-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    margin-top: 0.4rem;
+}
+
+@media (max-width: 1024px) {
+    .footer-social-links {
+        justify-content: center;
+    }
+}
+
+.footer-insta-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 4px 12px;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.footer-insta-link::before {
+    content: "📸";
+    font-size: 0.85rem;
+}
+
+.footer-insta-link:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.9);
+}
